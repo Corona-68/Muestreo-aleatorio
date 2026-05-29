@@ -1,0 +1,6 @@
+{
+  "name": "GeoMuestreo - Herramienta de Muestreo Aleatorio",
+  "description": "Aplicación interactiva para generar puntos de muestreo aleatorio en un área geográfica definida, con exportación de datos y visualización en mapa.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}
