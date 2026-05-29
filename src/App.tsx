@@ -89,7 +89,7 @@ export default function App() {
   const handleGenerate = useCallback(() => {
     if (!params.workName.trim()) {
       setError("Por favor, ingresa el nombre de la obra.");
-      return;
+      return false;
     }
 
     const kmIni = params.startKm + params.startMetros / 1000;
@@ -97,21 +97,32 @@ export default function App() {
 
     if (kmFin <= kmIni) {
       setError("El kilómetro final debe ser mayor al kilómetro inicial.");
-      return;
+      return false;
     }
 
-    setError(null);
-    const { results: newResults, n } = runSampling(params, referenceTable);
-    setResults(newResults);
-    setRandomN(n);
+    try {
+      setError(null);
+      console.log("Generando muestras con params:", params);
+      const { results: newResults, n } = runSampling(params, referenceTable);
+      console.log(`Muestreo completado con éxito. N aleatorio elegido: ${n}. Cantidad de muestras: ${newResults.length}`);
+      
+      setResults(newResults);
+      setRandomN(n);
 
-    // Smooth scroll to the results section on mobile screens so the user sees the tables update immediately
-    setTimeout(() => {
-      const resultsSection = document.getElementById('results-section-container');
-      if (resultsSection) {
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
+      // Smooth scroll to the results section on mobile screens so the user sees the tables update immediately
+      setTimeout(() => {
+        const resultsSection = document.getElementById('results-section-container');
+        if (resultsSection) {
+          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      
+      return true;
+    } catch (err: any) {
+      console.error("Error al generar muestras:", err);
+      setError(err?.message || "Ocurrió un error al generar las muestras.");
+      return false;
+    }
   }, [params, referenceTable]);
 
   const handleExportPDF = async () => {

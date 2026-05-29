@@ -5,7 +5,7 @@ import { Settings, Play, Info, Calculator, Ruler } from 'lucide-react';
 interface SidebarProps {
   params: SamplingParams;
   setParams: (params: SamplingParams) => void;
-  onGenerate: () => void;
+  onGenerate: () => boolean;
   onReferenceUpload: (data: string[][]) => void;
 }
 
@@ -18,16 +18,17 @@ export default function Sidebar({
   const [justGenerated, setJustGenerated] = useState(false);
 
   const handleGenerateClick = () => {
-    // Vibrate briefly on mobile devices if supported
-    if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
-      window.navigator.vibrate(12);
+    const success = onGenerate();
+    if (success) {
+      // Vibrate briefly on mobile devices if supported
+      if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(12);
+      }
+      setJustGenerated(true);
+      setTimeout(() => {
+        setJustGenerated(false);
+      }, 1500);
     }
-    
-    onGenerate();
-    setJustGenerated(true);
-    setTimeout(() => {
-      setJustGenerated(false);
-    }, 1500);
   };
 
   const handleCSVUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
