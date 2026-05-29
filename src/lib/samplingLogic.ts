@@ -47,7 +47,7 @@ export function runSampling(
         const chainage = `${kmPart} + ${mPartStr}`;
 
         results.push({
-          id: crypto.randomUUID(),
+          id: Math.random().toString(36).substring(2, 11) + '-' + Date.now().toString(36),
           order: valor.toString().padStart(2, '0'),
           a,
           b,
