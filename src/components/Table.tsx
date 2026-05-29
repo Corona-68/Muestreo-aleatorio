@@ -103,13 +103,6 @@ export default function PointsTable({ results, randomN }: TableProps) {
 
       {/* Mobile View: Stack of three separate tables */}
       <div className="block md:hidden space-y-6">
-        {randomN !== null && (
-          <div className="bg-emerald-50 border border-emerald-100 px-4 py-3 rounded-xl flex items-center gap-2.5 text-emerald-800 font-bold text-sm shadow-sm">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Fila Inicial Aleatoria: N = {randomN}</span>
-          </div>
-        )}
-
         {/* Table 1: Números Aleatorios */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
           <div className="bg-slate-50 px-4 py-3 border-b border-slate-100">

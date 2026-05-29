@@ -420,13 +420,6 @@ export default function App() {
           </AnimatePresence>
 
           <div id="results-section-container" className="space-y-6">
-            {randomN && (
-              <div className="flex items-center gap-3 px-6 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-lg w-fit text-lg font-bold">
-                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                Número aleatorio N = {randomN}
-              </div>
-            )}
-
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
               <div className="xl:col-span-12 hidden md:block">
                 <div className="h-[430px] sm:h-[500px] lg:h-[600px]" ref={visualizerRef}>
