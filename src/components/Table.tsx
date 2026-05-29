@@ -3,9 +3,10 @@ import { Table as TableIcon, MapPin } from 'lucide-react';
 
 export interface TableProps {
   results: SamplingResult[];
+  randomN: number | null;
 }
 
-export default function PointsTable({ results }: TableProps) {
+export default function PointsTable({ results, randomN }: TableProps) {
   if (results.length === 0) {
     return (
       <div className="glass-card rounded-2xl p-12 text-center border-dashed">
@@ -20,9 +21,17 @@ export default function PointsTable({ results }: TableProps) {
       {/* Desktop View: Wide consolidated table */}
       <div className="hidden md:flex glass-card rounded-2xl overflow-hidden flex-col min-h-[400px]">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white/50 sticky top-0 z-20 backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            <TableIcon className="w-4 h-4 text-blue-500" />
-            <h3 className="text-lg font-bold text-slate-700 tracking-tight">Resultados del Muestreo</h3>
+          <div className="flex items-center gap-3">
+            <TableIcon className="w-4.5 h-4.5 text-blue-500" />
+            <h3 className="text-lg font-bold text-slate-700 tracking-tight flex items-center gap-2">
+              Resultados del Muestreo
+              {randomN !== null && (
+                <span className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200/60 px-2 py-0.5 rounded-md font-mono font-extrabold flex items-center gap-1.5 animate-pulse">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  N = {randomN}
+                </span>
+              )}
+            </h3>
           </div>
           <span className="text-sm font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full uppercase tracking-wider">
             {results.length} muestras
@@ -94,6 +103,13 @@ export default function PointsTable({ results }: TableProps) {
 
       {/* Mobile View: Stack of three separate tables */}
       <div className="block md:hidden space-y-6">
+        {randomN !== null && (
+          <div className="bg-emerald-50 border border-emerald-100 px-4 py-3 rounded-xl flex items-center gap-2.5 text-emerald-800 font-bold text-sm shadow-sm">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Fila Inicial Aleatoria: N = {randomN}</span>
+          </div>
+        )}
+
         {/* Table 1: Números Aleatorios */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
           <div className="bg-slate-50 px-4 py-3 border-b border-slate-100">

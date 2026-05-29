@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { SamplingParams } from '../lib/utils';
 import { Settings, Play, Info, Calculator, Ruler } from 'lucide-react';
 
@@ -7,13 +8,15 @@ interface SidebarProps {
   setParams: (params: SamplingParams) => void;
   onGenerate: () => boolean;
   onReferenceUpload: (data: string[][]) => void;
+  randomN: number | null;
 }
 
 export default function Sidebar({
   params,
   setParams,
   onGenerate,
-  onReferenceUpload
+  onReferenceUpload,
+  randomN
 }: SidebarProps) {
   const [justGenerated, setJustGenerated] = useState(false);
 
@@ -169,6 +172,19 @@ export default function Sidebar({
               </>
             )}
           </button>
+          
+          {randomN !== null && (
+            <motion.div 
+              key={`side-n-${randomN}`}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center text-xs font-bold text-slate-500 bg-slate-100/80 p-2.5 rounded-lg border border-slate-200/50 flex items-center justify-center gap-1.5"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Fila aleatoria actual:</span>
+              <span className="text-blue-600 font-mono text-sm font-extrabold">{randomN}</span>
+            </motion.div>
+          )}
         </div>
 
         <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl flex gap-3">

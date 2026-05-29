@@ -400,6 +400,7 @@ export default function App() {
             setReferenceTable(data);
             setError(null);
           }}
+          randomN={randomN}
         />
 
         {/* Content Area */}
@@ -418,28 +419,30 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {randomN && (
-            <div className="flex items-center gap-3 px-6 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-lg w-fit text-lg font-bold">
-              <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
-              Número aleatorio N = {randomN}
-            </div>
-          )}
-
-          <div id="results-section-container" className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-            <div className="xl:col-span-12 hidden md:block">
-              <div className="h-[430px] sm:h-[500px] lg:h-[600px]" ref={visualizerRef}>
-                <CoordinateVisualizer 
-                  results={results} 
-                  stripWidth={params.stripWidth} 
-                  startKm={params.startKm}
-                  startMetros={params.startMetros}
-                  longTramo={(params.endKm + params.endMetros / 1000 - (params.startKm + params.startMetros / 1000)) * 1000}
-                />
+          <div id="results-section-container" className="space-y-6">
+            {randomN && (
+              <div className="flex items-center gap-3 px-6 py-3 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-lg w-fit text-lg font-bold">
+                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                Número aleatorio N = {randomN}
               </div>
-            </div>
-            
-            <div className="xl:col-span-12">
-              <Table results={results} />
+            )}
+
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+              <div className="xl:col-span-12 hidden md:block">
+                <div className="h-[430px] sm:h-[500px] lg:h-[600px]" ref={visualizerRef}>
+                  <CoordinateVisualizer 
+                    results={results} 
+                    stripWidth={params.stripWidth} 
+                    startKm={params.startKm}
+                    startMetros={params.startMetros}
+                    longTramo={(params.endKm + params.endMetros / 1000 - (params.startKm + params.startMetros / 1000)) * 1000}
+                  />
+                </div>
+              </div>
+              
+              <div className="xl:col-span-12">
+                <Table results={results} randomN={randomN} />
+              </div>
             </div>
           </div>
         </div>
