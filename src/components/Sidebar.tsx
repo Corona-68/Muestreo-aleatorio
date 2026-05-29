@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SamplingParams } from '../lib/utils';
 import { Settings, Play, Info, Calculator, Ruler } from 'lucide-react';
 
@@ -15,6 +15,21 @@ export default function Sidebar({
   onGenerate,
   onReferenceUpload
 }: SidebarProps) {
+  const [justGenerated, setJustGenerated] = useState(false);
+
+  const handleGenerateClick = () => {
+    // Vibrate briefly on mobile devices if supported
+    if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(12);
+    }
+    
+    onGenerate();
+    setJustGenerated(true);
+    setTimeout(() => {
+      setJustGenerated(false);
+    }, 1500);
+  };
+
   const handleCSVUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -133,11 +148,25 @@ export default function Sidebar({
 
         <div className="pt-4 space-y-3">
           <button
-            onClick={onGenerate}
-            className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-slate-200"
+            type="button"
+            onClick={handleGenerateClick}
+            className={`w-full py-4 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.95] active:bg-slate-800 shadow-lg cursor-pointer touch-manipulation select-none ${
+              justGenerated 
+                ? 'bg-emerald-600 shadow-emerald-100 scale-[0.98]' 
+                : 'bg-slate-900 hover:bg-slate-800 shadow-slate-200'
+            }`}
           >
-            <Play className="w-4 h-4" />
-            Generar Muestras
+            {justGenerated ? (
+              <>
+                <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
+                <span>¡Muestras Generadas!</span>
+              </>
+            ) : (
+              <>
+                <Play className="w-4 h-4" />
+                <span>Generar Muestras</span>
+              </>
+            )}
           </button>
         </div>
 

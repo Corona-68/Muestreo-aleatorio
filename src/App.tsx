@@ -104,6 +104,14 @@ export default function App() {
     const { results: newResults, n } = runSampling(params, referenceTable);
     setResults(newResults);
     setRandomN(n);
+
+    // Smooth scroll to the results section on mobile screens so the user sees the tables update immediately
+    setTimeout(() => {
+      const resultsSection = document.getElementById('results-section-container');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }, [params, referenceTable]);
 
   const handleExportPDF = async () => {
@@ -406,7 +414,7 @@ export default function App() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          <div id="results-section-container" className="grid grid-cols-1 xl:grid-cols-12 gap-8">
             <div className="xl:col-span-12 hidden md:block">
               <div className="h-[430px] sm:h-[500px] lg:h-[600px]" ref={visualizerRef}>
                 <CoordinateVisualizer 
